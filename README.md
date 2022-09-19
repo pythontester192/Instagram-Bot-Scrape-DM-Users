@@ -4,4 +4,4 @@
  1. Install requirements with this command --> pip install -r requirements.txt<br>
  2. Open infos folder and fill your infos of accounts in accounts.json file, in messages.txt put your message list.<br>
  3. Watch this full tutorial on how to use this bot step by step<br>
-     >coming soon
+     >https://youtu.be/q_PZ5z7H2Hc
