@@ -31,7 +31,9 @@ def scrape():
     # TODO: invoking in headless removes need for GUI
     # options.add_argument("--headless")
     options.add_argument('--no-sandbox')
+    options.add_argument("--lang=en")
     options.add_argument("--log-level=3")
+    options.add_experimental_option("detach", True)
 
     mobile_emulation = {
         "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/535.19"}
@@ -40,7 +42,7 @@ def scrape():
     bot = webdriver.Chrome(executable_path=CM().install(), options=options)
     bot.set_window_size(600, 1000)
 
-    bot.get('https://www.instagram.com/accounts/login/')
+    bot.get('https://www.instagram.com/')
 
     time.sleep(2)
 
@@ -48,20 +50,20 @@ def scrape():
 
     user_element = WebDriverWait(bot, ELEMENTS_TIMEOUT).until(
         EC.presence_of_element_located((
-            By.XPATH, '/html/body/div[1]/section/main/div/div/div[1]/div[2]/form/div/div[1]/div/label')))
+            By.XPATH, '//*[@id="loginForm"]/div/div[1]/div/label/input')))
             
 
     user_element.send_keys(username)
 
     pass_element = WebDriverWait(bot, ELEMENTS_TIMEOUT).until(
         EC.presence_of_element_located((
-            By.XPATH, '/html/body/div[1]/section/main/div/div/div[1]/div[2]/form/div/div[2]/div/label')))
+            By.XPATH, '//*[@id="loginForm"]/div/div[2]/div/label/input')))
 
     pass_element.send_keys(password)
 
     login_button = WebDriverWait(bot, ELEMENTS_TIMEOUT).until(
         EC.presence_of_element_located((
-            By.XPATH, '/html/body/div[1]/section/main/div/div/div[1]/div[2]/form/div/div[3]/button')))
+            By.XPATH, '//*[@id="loginForm"]/div/div[3]/button')))
 
     time.sleep(0.4)
 
@@ -107,8 +109,7 @@ def scrape():
 
         time.sleep(5)
 
-        more_followers = bot.find_elements_by_xpath(
-        "//a[@class='qi72231t nu7423ey n3hqoq4p r86q59rh b3qcqh3k fq87ekyn bdao358l fsf7x5fv rse6dlih s5oniofx m8h3af8h l7ghb35v kjdc1dyq kmwttqpk srn514ro oxkhqvkx rl78xhln nch0832m cr00lzj9 rn8ck1ys s3jn8y49 icdlwmnq notranslate _a6hd']")
+        more_followers = bot.find_elements(By.XPATH, '//*/div[@role="button"]/a')
         
         followers.update(more_followers)
 

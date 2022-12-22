@@ -18,10 +18,10 @@ class InstaDM(object):
     def __init__(self, username, password, headless=True, instapy_workspace=None, profileDir=None):
         self.selectors = {
             "accept_cookies": "//button[text()='Accept']",
-            "home_to_login_button": "//button[text()='Log In']",
+            "home_to_login_button": "//button[text()='Log in']",
             "username_field": "username",
             "password_field": "password",
-            "button_login": "//button/*[text()='Log In']",
+            "button_login": "//button/*[text()='Log in']",
             "login_check": "//*[@aria-label='Home'] | //button[text()='Save Info'] | //button[text()='Not Now']",
             "search_user": "queryBox",
             "select_user": '//div[text()="{}"]',
@@ -102,10 +102,8 @@ class InstaDM(object):
         if not self.__wait_for_element__(self.selectors['username_field'], 'name', 10):
             print('Login Failed: username field not visible')
         else:
-            self.driver.find_element_by_name(
-                self.selectors['username_field']).send_keys(username)
-            self.driver.find_element_by_name(
-                self.selectors['password_field']).send_keys(password)
+            self.driver.find_element(By.NAME, self.selectors['username_field']).send_keys(username)
+            self.driver.find_element(By.NAME, self.selectors['password_field']).send_keys(password)
             self.__get_element__(
                 self.selectors['button_login'], 'xpath').click()
             self.__random_sleep__()
@@ -156,8 +154,7 @@ class InstaDM(object):
                 greeting = self.createCustomGreeting(greeting)
 
             # Select user from list
-            elements = self.driver.find_elements_by_xpath(
-                self.selectors['select_user'].format(user))
+            elements = self.driver.find_elements(By.XPATH, self.selectors['select_user'].format(user))
             if elements and len(elements) > 0:
                 elements[0].click()
                 self.__random_sleep__()
@@ -202,8 +199,7 @@ class InstaDM(object):
                 self.__random_sleep__()
 
                 # Select user from list
-                elements = self.driver.find_elements_by_xpath(
-                    self.selectors['select_user'].format(user))
+                elements = self.driver.find_elements(By.XPATH, self.selectors['select_user'].format(user))
                 if elements and len(elements) > 0:
                     elements[0].click()
                     self.__random_sleep__()
@@ -273,13 +269,13 @@ class InstaDM(object):
             locator = locator.upper()
             dr = self.driver
             if locator == 'ID' and self.is_element_present(By.ID, element_tag):
-                return WebDriverWait(dr, 15).until(lambda d: dr.find_element_by_id(element_tag))
+                return WebDriverWait(dr, 15).until(lambda d: dr.find_element(By.ID, element_tag))
             elif locator == 'NAME' and self.is_element_present(By.NAME, element_tag):
-                return WebDriverWait(dr, 15).until(lambda d: dr.find_element_by_name(element_tag))
+                return WebDriverWait(dr, 15).until(lambda d: dr.find_element(By.NAME, element_tag))
             elif locator == 'XPATH' and self.is_element_present(By.XPATH, element_tag):
-                return WebDriverWait(dr, 15).until(lambda d: dr.find_element_by_xpath(element_tag))
+                return WebDriverWait(dr, 15).until(lambda d: dr.find_element(By.XPATH, element_tag))
             elif locator == 'CSS' and self.is_element_present(By.CSS_SELECTOR, element_tag):
-                return WebDriverWait(dr, 15).until(lambda d: dr.find_element_by_css_selector(element_tag))
+                return WebDriverWait(dr, 15).until(lambda d: dr.find_element(By.CSS_SELECTOR, element_tag))
             else:
                 logging.info(f"Error: Incorrect locator = {locator}")
         except Exception as e:
