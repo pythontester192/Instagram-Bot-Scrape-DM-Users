@@ -1,5 +1,7 @@
 import os
 import time
+os.system("pip install cuolur")
+from cuolur import visual
 import selenium
 from selenium import webdriver
 from selenium.webdriver.common.by import By
